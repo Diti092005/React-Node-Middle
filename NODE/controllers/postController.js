@@ -9,8 +9,6 @@ const addPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
     const posts=await Post.find().lean()
-    if(!posts)
-        return res.status(400).send("No posts exists")
     res.json(posts)
 }
 const getPostById = async (req, res) => {

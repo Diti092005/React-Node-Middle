@@ -2,8 +2,6 @@ const Todos = require("../models/Todos")
 
 const getAllTodus = async (req, res) => {
     const todos = await Todos.find().lean()
-    if (!todos?.length)
-        return res.status(400).send("There are no todos!!!")
     res.json(todos)
 }
 
@@ -40,14 +38,13 @@ const deleteTodoById = async (req, res) => {
 }
 
 const updateTodoById = async (req, res) => {
-    const { id, title, tags, completed } = req.body
-    if (id == null)
+    const { _id, title, tags } = req.body
+    if (_id == null)
         return res.status(400).send("Id is required")
-    const todo = await Todos.findById(id).exec()
+    const todo = await Todos.findById(_id).exec()
     if (!todo)
         return res.status(400).send("This todo isn't exists")
-    if (completed)
-        todo.completed = completed
+    todo.completed = !todo.completed
     if (title)
         todo.title = title
     if (tags)
