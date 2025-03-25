@@ -44,7 +44,7 @@ const updateTodoById = async (req, res) => {
     const todo = await Todos.findById(_id).exec()
     if (!todo)
         return res.status(400).send("This todo isn't exists")
-    if(changetodo)
+    if(changetodo)//for knowing if it is update to the complete or the other type-not the complete
     todo.completed = !todo.completed
     if (title)
         todo.title = title
