@@ -8,7 +8,7 @@ const addPost = async (req, res) => {
 }
 
 const getAllPosts = async (req, res) => {
-    const posts=await Post.find().lean()
+    const posts=await Post.find().sort({_id:1}).lean()
     res.json(posts)
 }
 const getPostById = async (req, res) => {
@@ -24,10 +24,10 @@ const getPostById = async (req, res) => {
     res.json(post)
 }
 const updatePost = async (req, res) => {
-    const {id,title,body} =req.body
-    if(!id)
+    const {_id,title,body} =req.body
+    if(!_id)
         return res.status(400).send("Id is required")
-    const post=await Post.findById(id).exec()
+    const post=await Post.findById(_id).exec()
     if(!post)
         return res.status(400).send("This post isn't exists")
     if(title)

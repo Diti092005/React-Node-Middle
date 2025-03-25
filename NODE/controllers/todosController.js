@@ -1,7 +1,7 @@
 const Todos = require("../models/Todos")
 
 const getAllTodus = async (req, res) => {
-    const todos = await Todos.find().lean()
+    const todos = await Todos.find().sort({_id:1}).lean()
     res.json(todos)
 }
 
@@ -38,12 +38,13 @@ const deleteTodoById = async (req, res) => {
 }
 
 const updateTodoById = async (req, res) => {
-    const { _id, title, tags } = req.body
+    const { _id, title, tags ,changetodo} = req.body
     if (_id == null)
         return res.status(400).send("Id is required")
     const todo = await Todos.findById(_id).exec()
     if (!todo)
         return res.status(400).send("This todo isn't exists")
+    if(changetodo)
     todo.completed = !todo.completed
     if (title)
         todo.title = title
@@ -53,6 +54,8 @@ const updateTodoById = async (req, res) => {
     res.json(updatetodo)
 }
 module.exports = { getAllTodus, getTodosById, updateTodoById, deleteTodoById, addTodo }
+
+
 
 
 

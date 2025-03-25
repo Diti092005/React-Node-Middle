@@ -12,7 +12,7 @@ const addUser = async (req, res) => {
 }
 
 const getAllUsers = async (req, res) => {
-    const users = await User.find().lean()
+    const users = await User.find().sort({_id:1}).lean()
     res.json(users)
 }
 
